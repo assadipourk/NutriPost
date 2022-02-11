@@ -1,0 +1,97 @@
+<section>
+  <h2>Nutrition Log</h2>
+
+  <form class="new-post-form">
+    <div>
+      <label for="workout"><strong>Workout</strong></label>
+      <input type="text" id="workout" name="workout" />
+    </div>
+    <div>
+      <label for="breakfast"><strong>Breakfast</strong></label>
+      <input id="breakfast" name="breakfast" />
+    </div>
+    <div>
+      <label for="lunch"><strong>Lunch</strong></label>
+      <input id="lunch" name="lunch" />
+    </div>
+    <div>
+      <label for="dinner"><strong>Dinner</strong></label>
+      <input id="dinner" name="dinner" />
+    </div>
+    <div>
+      <label for="dessert"><strong>Desserts/Snacks</strong></label>
+      <input id="dessert" name="dessert" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label"><strong>Daily Log</strong></label>
+      <textarea class="form-control" id="dailylog" name="dailylog" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn">Create</button>
+  </form>
+</section>
+
+{{#if posts}}
+<section>
+  <h2>Your Logs</h2>
+  <ol>
+    {{#each posts as |post|}}
+    <li>
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+      <ol> <strong>Workout - </strong>{{post.workout}}</ol>
+      <ol> <strong>Breakfast - </strong>{{post.breakfast}}</ol>
+      <ol> <strong>Lunch - </strong>{{post.lunch}}</ol>
+      <ol> <strong>Dinner - </strong>{{post.dinner}}</ol>
+      <ol> <strong>Dessert and Snacks - </strong>{{post.dessert}}</ol>
+      <ol> <strong>Daily Notes - </strong>{{post.dailylog}}</ol>
+    </li>
+    {{/each}}
+  </ol>
+</section>
+{{/if}}
+
+<canvas id="myChart" width="50" height="50"></canvas>
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      datasets: [{
+        label: '# of Calories',
+        data: [3000, 3500, 2900, 3200, 3800, 3500, 3750],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+<label>find calories</label><br>
+<input type="text" id="searchCalories"><br>
+<button type="button" id="myButton">submit</button>
+<div id="displayCalories"></div>
+
+<script src="/javascript/add-post.js"></script>
+<script type="module" src="/javascript/api.js"></script>
